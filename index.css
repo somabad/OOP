@@ -1,0 +1,336 @@
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  position: relative; /* Required for positioning the background div */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  min-height: 100vh;
+}
+
+.background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Cover the entire background */
+  z-index: -1; /* Send the video behind other content */
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Full height of the viewport */
+}
+
+.container {
+  max-width: 800px; /* Adjust max width as needed */
+  margin: 0 auto;
+  padding: 85px;
+  background: linear-gradient(to right, #3b6a94, #339fa5);
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(250, 249, 249, 0.911);
+  text-align: center;
+  flex: 1; /* Allow the container to grow and fill the available space */
+  overflow: hidden; /* Ensure content does not overflow */
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.menu-button {
+  background-color: rgba(255, 255, 255, 0.8); /* Light background for contrast */
+  border: 2px solid #f0f1f1; /* Add a border */
+  border-radius: 10px; /* Rounded corners */
+  cursor: pointer;
+  font-size: 1.6em; /* Increase font size */
+  color: #4facfe; /* Change text color */
+  padding: 10px 20px; /* Increase padding for a larger button */
+  transition: color 0.3s, background-color 0.3s, transform 0.2s; /* Add transition for smooth effect */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  margin-right: 20px;
+}
+
+.menu-button:hover {
+  color: #ffffff; /* Change text color on hover */
+  background-color: #3486bd;
+  transform: scale(0.8);
+}
+
+.dropdown {
+  display: none; /* Hide the dropdown by default */
+  position: absolute; /* Position it relative to the button */
+  background-color: white; /* Background color */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+  z-index: 1; /* Ensure it appears above other content */
+  border-radius: 5px; /* Rounded corners */
+  right: 0; /* Align the dropdown to the left of the button */
+  top: 5%; /* Space between button and dropdown */
+}
+
+.dropdown a {
+  display: block; /* Make links block elements */
+  padding: 10px 15px; /* Padding for links */
+  color: #4facfe; /* Link color */
+  text-decoration: none; /* Remove underline */
+}
+
+.dropdown a:hover {
+  background-color: #f1f1f1; /* Change background on hover */
+}
+
+.paragraph-container {
+  background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+  padding: 15px 20px; /* Add padding around each paragraph */
+  border-radius: 8px; /* Rounded corners */
+  margin: 15px 0; /* Space between paragraph containers */
+  text-align: justify; /* Justify text inside container */
+  max-width: 800px; /* Center container within page */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+h1 {
+  font-size: 2.5em; /* Increase font size */
+  font-weight: bold; /* Make the text bold */
+  color:#f1f8f8; /* Change text color */
+  text-shadow: 2px 2px 4px rgba(253, 246, 246, 0.788); /* Add a subtle shadow */
+  margin: 20px 0; /* Add margin for spacing */
+  padding: 10px; /* Add padding for better spacing */
+  text-align: center;
+  margin-left: 20px;
+}
+
+h2 {
+  font-size: 2.2em;
+  color: #f8f9fa;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+  margin-top: 25px;
+  margin-bottom: 15px;
+  text-align: center; /* Center heading text */
+}
+
+h3 {
+  font-size: 1.8em;
+  color: #f2f5f5;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
+  margin: 20px 0;
+  text-align: center;
+}
+
+h4 {
+  font-size: 1.5em;
+  color: #f1f4f4;
+  margin: 18px 0;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+p {
+  font-size: 1.1em;
+  color: #fdfdfd;
+  line-height: 1.6;
+  margin: 15px 0;
+  padding: 0 10px;
+}
+
+.search-container {
+  margin-bottom: 20px;
+}
+
+input[type="text"] {
+  padding: 15px;
+  width: 60%;
+  border: 2px solid #f1f4f7;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+input[type="text"]:focus {
+  border-color: #00f2fe;
+  outline: none;
+}
+
+button {
+  padding: 15px 20px;
+  background-color: #4facfe;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+  background-color: #2acdd3;
+  transform: scale(1.05);
+}
+
+.weather-info {
+  margin: 20px 0;
+  padding: 15px;
+}
+
+.navigation {
+  margin-top: 20px;
+}
+
+.navigation a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #4facfe;
+  font-weight: bold;
+}
+
+.navigation a:hover {
+  text-decoration: underline;
+}
+
+/* Main Content */
+main {
+  flex: 1; /* Allow main to grow and fill the available space */
+}
+
+.seasonal-tips-container {
+  background-color: #5e9ba3da; /* Light background color */
+  padding: 80px;
+  border-radius: 8px;
+  margin: 20px auto;
+  max-width: 800px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+}
+
+.seasonal-tips {
+  text-align: center;
+}
+
+.seasonal-tips h2 {
+  font-size: 1.8em; /* Adjust font size for the heading */
+  color: #f4f5f7; /* Heading color */
+}
+
+.seasonal-tips p {
+  font-size: 1.2em; /* Font size for tips */
+  color: #fcf9f9; /* Text color */
+}
+
+
+.activity-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px; /* Space between boxes */
+  justify-content: center;
+  margin-top: 20px;
+  max-width: 100%; /* Prevent overflow */
+}
+
+.activity-box {
+  flex: 1 1 45%;
+  max-width: 45%; /* Prevent overflow */
+  box-sizing: border-box;
+  padding: 10px;
+  background-color: #ffffff60;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  overflow: hidden; /* Prevent content overflow */
+}
+
+.activity-box img {
+  max-width: 100%; /* Responsive image */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 8px; /* Rounded corners for image */
+}
+
+.footer {
+  background-color: rgba(255, 255, 255, 0.8); /* Light background for contrast */
+  padding: 20px; /* Padding for spacing */
+  text-align: center; /* Center the text */
+  width: 100%; /* Full width */
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+}
+
+.footer-content {
+  max-width: 800px; /* Limit the width */
+  margin: 0 auto; /* Center the content */
+}
+
+.footer p {
+  margin: 0; /* Remove default margin */
+  color: #4facfe; /* Text color */
+}
+
+.footer-links {
+  margin-top: 10px; /* Space between text and links */
+}
+
+.footer-links a {
+  margin: 0 15px; /* Space between links */
+  text-decoration: none; /* Remove underline */
+  color: #4facfe; /* Link color */
+}
+
+.footer-links a:hover {
+  text-decoration: underline; /* Underline on hover */
+}
+
+.last-update-container,
+.forecast-container {
+    background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+    padding: 15px 20px; /* Add padding around each container */
+    border-radius: 50px; /* Rounded corners */
+    margin: 15px 0; /* Space between the containers */
+    text-align: center; /* Center the text inside the containers */
+    max-width: 800px; /* Center containers within page */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.forecast {
+    display: flex; /* Display forecast items in a flexbox */
+    flex-wrap: wrap; /* Allow wrapping to next line */
+    justify-content: center; /* Center items */
+}
+
+.forecast-item {
+    background-color: rgba(255, 255, 255, 0.3); /* Slightly more opaque background */
+    border-radius: 8px; /* Rounded corners */
+    padding: 10px; /* Padding for the forecast items */
+    margin: 10px; /* Space between items */
+    flex: 1 1 30%; /* Flex properties for responsiveness */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+    text-align: center; /* Center text in each forecast item */
+}
+
+
+#currentWeatherContainer {
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin-bottom: 20px;
+  background-color: #f9f9f970;
+}
+
+#forecastContainer {
+  border: 1px solid #ccc;
+  padding: 15px;
+  background-color: #f0f8ff69;
+}
+
+.forecast-day {
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+  margin-top: 10px;
+}

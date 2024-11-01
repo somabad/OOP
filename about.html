@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="about.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>About WeatherWise</title>
+</head>
+<body>
+    <div class="background"></div>
+    <header>
+        <div class="title-container">
+            <h1>WeatherWise</h1>
+            <button id="menuButton" class="menu-button">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <div class="dropdown" id="dropdownMenu">
+            <a href="index.html">Back to Home</a>
+            <a href="favorites.html">View Favorites</a>
+            <a href="activities.html">Activity Recommendations</a>
+            <a href="about.html">About</a>
+        </div>
+    </header>
+    
+    <div class="container"> <!-- Added a container for styling -->
+        <h1>About WeatherWise</h1><br>
+        <p>A desktop program called WeatherWise gives information on the weather for outdoor activities.</p>
+        <p>In accordance with the weather, users can view the forecast for particular areas and get suggestions for outdoor activities.</p>
+        <p>For example, users might be given recommendations for hiking, paragliding, picnics, or cycling if the forecast calls for sunny sky and moderate temperatures. On the other hand, the app can offer inside activities or different dates for outdoor events if rain is predicted.</p>
+        <p>Through the use of real-time weather data obtained via the WeatherAPI, WeatherWise enables users to make well-informed choices on their outdoor pursuits. Their entire experience is improved by this feature, which lets them enjoy being outside while lowering the risks brought on by erratic weather. WeatherWise is the ideal partner for anyone wishing to maximize their outdoor experiences based on the weather, whether they are organizing a solo trip, a family outing, or a weekend break.</p>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 WeatherWise. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="index.html">Back to Home</a>
+                <a href="favorites.html">View Favorites</a>
+                <a href="activities.html">Activity Recommendations</a>
+                <a href="about.html">About</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="renderer.js"></script>
+    <script>
+        // JavaScript for dropdown functionality
+        document.getElementById('menuButton').addEventListener('click', function() {
+            const dropdown = document.getElementById('dropdownMenu');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(event) {
+            if (!event.target.matches('#menuButton')) {
+                const dropdowns = document.getElementsByClassName("dropdown");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    const openDropdown = dropdowns[i];
+                    if (openDropdown.style.display === 'block') {
+                        openDropdown.style.display = 'none';
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>

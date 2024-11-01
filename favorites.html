@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="favourite.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Favorites</title>
+</head>
+<body>
+    <div class="background"></div>
+    <header>
+        <div class="title-container">
+            <h1>WeatherWise</h1>
+            <button id="menuButton" class="menu-button">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <div class="dropdown" id="dropdownMenu">
+            <a href="index.html">Back to Home</a>
+            <a href="favorites.html">View Favorites</a>
+            <a href="activities.html">Activity Recommendations</a>
+            <a href="about.html">About</a>
+        </div>
+    </header>
+    
+    <main>
+        <div class="container"> <!-- Added a container for styling -->
+            <h1>Your Favorites</h1>
+            <ul id="favoritesList" class="favorites-list"></ul>
+            <button id="clearFavorites" class="clear-button">Clear All</button>
+        </div>
+    </main>
+     
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 WeatherWise. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="index.html">Back to Home</a>
+                <a href="favorites.html">View Favorites</a>
+                <a href="activities.html">Activity Recommendations</a>
+                <a href="about.html">About</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="renderer.js"></script>
+    <script>
+        // JavaScript for dropdown functionality
+        document.getElementById('menuButton').addEventListener('click', function() {
+            const dropdown = document.getElementById('dropdownMenu');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(event) {
+            if (!event.target.matches('#menuButton')) {
+                const dropdowns = document.getElementsByClassName("dropdown");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    const openDropdown = dropdowns[i];
+                    if (openDropdown.style.display === 'block') {
+                        openDropdown.style.display = 'none';
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #f5f0f0;
+  position: relative; 
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  overflow-y: auto; /* Allow vertical scrolling */
+  min-height: 100vh;
+  background: url('bg1.jpeg') no-repeat center center/cover; /* Background image settings */
+  display: flex; 
+  flex-direction: column; 
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1; 
+  width: 100%; 
+}
+
+.container {
+  max-width: 800px;
+  margin: 40px auto; /* Add margin for better spacing */
+  padding: 60px; /* Adjust padding for a cleaner look */
+  background: rgba(24, 135, 143, 0.9); 
+  border-radius: 15px; /* Increase border-radius for a softer look */
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3); /* Enhance shadow for depth */
+  text-align: center;
+  flex: 1; 
+  width: 90%; /* Adjust width for better responsiveness */
+  box-sizing: border-box; 
+  transition: transform 0.3s; /* Smooth scaling effect */
+}
+
+.container:hover {
+  transform: scale(1.02); /* Slight scaling effect on hover */
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px; /* Increased margin for a more spacious look */
+}
+  
+.title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.menu-button {
+  background: rgba(255, 255, 255, 0.9); 
+  border: 2px solid #f0f1f1; 
+  border-radius: 15px; /* Slightly rounder corners */
+  cursor: pointer;
+  font-size: 1.5em; /* Slightly smaller for better proportions */
+  color: #4facfe; 
+  padding: 12px 24px; /* Adjusted padding for larger buttons */
+  transition: color 0.3s, background-color 0.3s, transform 0.2s; 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Softer shadow */
+  margin-right: 20px;
+}
+
+.menu-button:hover {
+  color: #ffffff; 
+  background-color: #3486bd;
+  transform: scale(0.95); /* Less aggressive scaling */
+}
+  
+.dropdown {
+  display: none; 
+  position: absolute; 
+  background-color: white; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  z-index: 1; 
+  border-radius: 5px; 
+  right: 0; 
+  top: 11%; 
+}
+
+.dropdown a {
+  display: block; 
+  padding: 12px 18px; /* Adjusted padding for better touch targets */
+  color: #4facfe; 
+  text-decoration: none; 
+}
+
+.dropdown a:hover {
+  background-color: #f1f1f1; 
+}
+  
+h1 {
+  font-size: 2.5em; 
+  font-weight: bold; 
+  color: #faf5f5; 
+  text-shadow: 2px 2px 4px rgba(253, 246, 246, 0.788); 
+  margin: 20px 0; 
+  padding: 20px; 
+  text-align: center;
+}
+
+h2 {
+  font-size: 2em; /* Slightly larger font size for h2 */
+  color: rgba(253, 246, 246, 0.9); 
+  text-align: justify;
+  margin: 20px 0; /* Increased margin for better spacing */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+}
+
+p {
+  font-size: 1.2em;
+  color: #faf7f7;
+  text-align: justify;
+  line-height: 1.8; /* Improved readability with increased line height */
+  margin-bottom: 20px; /* Spacing below paragraphs */
+  padding: 10px; /* Add padding for text inside paragraphs */
+  background: rgba(255, 255, 255, 0.2); /* Light background for better contrast */
+  border-radius: 5px; /* Rounded corners for paragraphs */
+}
+
+button {
+  padding: 15px 15px;
+  background-color: #4facfe;
+  color: white;
+  border: none;
+  border-radius: 10px; /* Increased border-radius for softness */
+  cursor: pointer;
+  font-size: 1.1em; /* Slightly larger font size for buttons */
+  transition: background-color 0.3s, transform 0.2s;
+  margin-top: 20px;
+  margin-left: 20px; /* Margin to separate from other elements */
+}
+
+button:hover {
+  background-color: #2acdd3;
+  transform: scale(1.05);
+}
+
+.footer {
+  background-color: rgba(255, 255, 255, 0.8); 
+  padding: 20px; 
+  text-align: center; 
+  width: 100%; 
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); 
+  position: fixed; /* Fix the footer position */
+  bottom: 0; /* Align it to the bottom of the viewport */
+}
+
+.footer-content {
+  max-width: 800px; 
+  margin: 0 auto; 
+}
+
+.footer p {
+  margin: 0; 
+  color: #4facfe; 
+  text-align: center;
+  font-size: 1em; /* Smaller font size for footer */
+}
+
+.footer-links {
+  margin-top: 10px; 
+}
+
+.footer-links a {
+  margin: 0 15px; 
+  text-decoration: none; 
+  color: #4facfe; 
+  transition: color 0.3s; /* Smooth transition for color change */
+}
+  
+.footer-links a:hover {
+  text-decoration: underline; 
+  color: #2acdd3; /* Change color on hover */
+}  

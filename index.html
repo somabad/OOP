@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Homepage</title>
+</head>
+<body>
+    <div class="page-container">
+        <video autoplay muted loop class="background-video">
+            <source src="bg2.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+        <header>
+            <div class="title-container">
+                <h1>WeatherWise</h1>
+                <button id="menuButton" class="menu-button" aria-label="Menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="dropdown" id="dropdownMenu">
+                    <a href="index.html">Back to Home</a>
+                    <a href="favorites.html">View Favorites</a>
+                    <a href="activities.html">Activity Recommendations</a>
+                    <a href="about.html">About</a>
+                </div>
+            </div>
+        </header>
+
+        <main class="container">
+            <p class="intro-text">Get ready for the day! Check the latest weather forecast and plan your activities with confidence.</p>
+            <br><br>
+            <div class="search-container">
+                <input type="text" id="city" placeholder="Enter city name" aria-label="City name" />
+                <button id="getWeather" aria-label="Get Weather">Get Weather</button>
+            </div>
+            
+            <div id="weatherInfo" class="weather-info">
+
+                <div id="currentWeatherContainer">
+                    <!-- Current weather data will be dynamically inserted here -->
+                </div>
+        
+                <div id="forecastContainer">
+                    <div class="forecast-day">
+                        <!-- Forecast data will be dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
+                <button id="saveLocation" aria-label="Save to Favorites">Save to Favorites</button>
+            <br>
+        </main>
+        <section class="seasonal-tips-container">
+            <div class="seasonal-tips">
+                <h2>Highlight</h2>
+                <p id="seasonalTip">It's a great day to enjoy some activities with your loved one!</p>
+                
+                <div class="activity-container">
+                    <div class="activity-box">
+                        <img src="cycling.jpg" alt="Seasonal Activity" />
+                        <p>Activity: Cycling with members</p>
+                    </div>
+                    <div class="activity-box">
+                        <img src="kayaking.jpg" alt="Seasonal Activity" />
+                        <p>Activity: Kayaking with happiness</p>
+                    </div>
+                    <div class="activity-box">
+                        <img src="hiking.jpg" alt="Seasonal Activity" />
+                        <p>Activity: Hiking!</p>
+                    </div>
+                    <div class="activity-box">
+                        <img src="picnic.jpg" alt="Seasonal Activity" />
+                        <p>Activity: Picnic with family</p>
+                    </div>
+                </div>
+            </div>
+        </section>                
+        <br><br>
+        <footer class="footer">
+            <div class="footer-content">
+                <p>&copy; 2024 WeatherWise. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="index.html">Back to Home</a>
+                    <a href="favorites.html">View Favorites</a>
+                    <a href="activities.html">Activity Recommendations</a>
+                    <a href="about.html">About</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="renderer.js"></script>
+    <script>
+        // JavaScript for dropdown functionality
+        document.getElementById('menuButton').addEventListener('click', function() {
+            const dropdown = document.getElementById('dropdownMenu');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(event) {
+            if (!event.target.matches('#menuButton')) {
+                const dropdowns = document.getElementsByClassName("dropdown");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    const openDropdown = dropdowns[i];
+                    if (openDropdown.style.display === 'block') {
+                        openDropdown.style.display = 'none';
+                    }
+                }
+            }
+        }
+
+        document.getElementById('getWeather').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent default button action
+
+        const location = document.getElementById('city').value;
+        // Store the location in localStorage
+        localStorage.setItem('userLocation', location);
+
+        if (currentWeatherData && currentWeatherData.location && forecastData && forecastData.forecast) {
+    // Proceed to display the weather and forecast
+        } else {
+            document.getElementById('weatherInfo').innerHTML = '<p>Error fetching weather or forecast data.</p>';
+        }
+
+    });
+    </script>
+</body>
+</html>
