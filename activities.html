@@ -47,22 +47,33 @@
         <button id="save-checklist-btn">Save Checklist</button>
     </div>
 
-    <div class="review-section">
-        <h2>Rate and Review an Activity</h2>
+    <!-- Review Section -->
+    <section id="reviewSection">
+        <h2>Submit Your Review</h2>
         <form id="reviewForm">
-            <label for="activityName">Activity Name:</label>
-            <input type="text" id="activityName" required>
-            <br>
-            <label for="rating">Rating (1 to 5):</label>
-            <input type="number" id="rating" min="1" max="5" required>
-            <br>
-            <label for="review">Review:</label>
-            <textarea id="review" rows="4" required></textarea>
-            <br>
+            <div>
+                <label for="activityName">Activity Name:</label>
+                <input type="text" id="activityName" required>
+            </div>
+            <div>
+                <label for="rating">Rating:</label>
+                <select id="rating" required>
+                    <option value="">Select Rating</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+            <div>
+                <label for="review">Review:</label>
+                <textarea id="review" rows="4" required></textarea>
+            </div>
             <button type="submit">Submit Review</button>
         </form>
         <div id="reviewsList"></div>
-    </div>   <br>
+    </section>
 
     <footer class="footer">
         <div class="footer-content">
@@ -137,38 +148,36 @@
     
             async function displaySuggestedActivities() {
                 if (!userLocation) {
-                console.log("No user location found.");
-                return;
+                    console.log("No user location found.");
+                    return;
+                }
+
+                const condition = await getWeatherCondition(userLocation);
+
+                if (condition && activitySuggestions[condition]) {
+                    const suggestions = activitySuggestions[condition];
+
+                    // Update the activity dropdown with suggested activities
+                    const activitySelect = document.getElementById('activity-select');
+                    activitySelect.innerHTML = '<option value="">Select an activity</option>'; 
+                    suggestions.forEach(([activity]) => {
+                        const option = document.createElement('option');
+                        option.value = activity;
+                        option.textContent = activity;
+                        activitySelect.appendChild(option);
+                    });
+
+                    // Display the suggested activities
+                    document.getElementById('activitySuggestions').innerHTML = `
+                    <h3>Activities for ${condition} weather:</h3>
+                    <ul>
+                        ${suggestions.map(activity => `<li>${activity[0]}: ${activity[1].join(", ")}</li>`).join('')}
+                    </ul>
+                    `;
+                } else {
+                    document.getElementById('activitySuggestions').innerHTML = '<p>No suggestions available for this weather condition.</p>';
+                }
             }
-
-            const condition = await getWeatherCondition(userLocation);
-
-            if (condition && activitySuggestions[condition]) {
-                const suggestions = activitySuggestions[condition];
-
-                // Update the activity dropdown with suggested activities
-                const activitySelect = document.getElementById('activity-select');
-                activitySelect.innerHTML = '<option value="">Select an activity</option>'; // Reset dropdown
-                suggestions.forEach(([activity]) => {
-                    const option = document.createElement('option');
-                    option.value = activity;
-                    option.textContent = activity;
-                    activitySelect.appendChild(option);
-                });
-
-                // Display the suggested activities
-                document.getElementById('activitySuggestions').innerHTML = `
-                <h3>Activities for ${condition} weather:</h3>
-                <ul>
-                    ${suggestions.map(activity => `<li>${activity[0]}: ${activity[1].join(", ")}</li>`).join('')}
-                </ul>
-            `;
-
-            } else {
-                document.getElementById('activitySuggestions').innerHTML = '<p>No suggestions available for this weather condition.</p>';
-            }
-              // Your existing display logic...
-        }
     
             displaySuggestedActivities();
     
@@ -182,119 +191,146 @@
             let customChecklists = JSON.parse(localStorage.getItem('customChecklists')) || {};
     
             function showPopup(message) {
-                alert(message); // You can also use a custom modal if you prefer
+                alert(message); 
             }
     
             function loadChecklist(activity) {
                 checklistDisplay.innerHTML = '';
                 const checklist = customChecklists[activity] || [];
-                checklist.forEach(item => {
+                checklist.forEach((item, index) => {
                     const li = document.createElement('li');
                     li.textContent = item;
+                    
+                    // Create a delete button for each item
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.textContent = 'Delete';
+                    deleteBtn.className = 'delete-item-btn'; // Assign a class for styling or identification
+                    deleteBtn.onclick = function() {
+                        deleteItem(activity, item); // Call the delete function with the activity and item
+                    };
+                    
+                    li.appendChild(deleteBtn);
                     checklistDisplay.appendChild(li);
                 });
             }
     
-            addItemBtn.addEventListener('click', function () {
+            function deleteItem(activity, item) {
+                customChecklists[activity] = customChecklists[activity].filter(i => i !== item);
+                localStorage.setItem('customChecklists', JSON.stringify(customChecklists));
+                loadChecklist(activity); // Reload the checklist to reflect changes
+                showPopup('Item deleted successfully!');
+            }
+    
+            addItemBtn.addEventListener('click', () => {
                 const selectedActivity = activitySelect.value;
-                const newItem = itemInput.value.trim();
-                if (selectedActivity && newItem) {
-                    if (!customChecklists[selectedActivity]) {
-                        customChecklists[selectedActivity] = [];
+                const item = itemInput.value.trim();
+
+                if (selectedActivity && item) {
+                    const confirmation = confirm(`Are you sure you want to add "${item}" to the checklist for "${selectedActivity}"?`);
+                    if (confirmation) {
+                        if (!customChecklists[selectedActivity]) {
+                            customChecklists[selectedActivity] = [];
+                        }
+                        customChecklists[selectedActivity].push(item);
+                        localStorage.setItem('customChecklists', JSON.stringify(customChecklists));
+                        loadChecklist(selectedActivity); // Load the updated checklist
+                        itemInput.value = ''; // Clear input
+                        showPopup('Item added to checklist successfully!');
+                    } else {
+                        showPopup('Item addition canceled.');
                     }
-                    customChecklists[selectedActivity].push(newItem);
-                    loadChecklist(selectedActivity);
-                    itemInput.value = ''; // Clear the input
-                    showPopup(`Item "${newItem}" added to checklist for "${selectedActivity}".`); // Pop-up message
                 } else {
-                    showPopup("Please select an activity and enter an item."); // Pop-up message for validation
+                    showPopup('Please select an activity and enter an item.');
                 }
             });
     
-            saveChecklistBtn.addEventListener('click', function () {
-                localStorage.setItem('customChecklists', JSON.stringify(customChecklists));
-                showPopup('Checklist saved!'); // Pop-up message for saving
-            });
-    
-            activitySelect.addEventListener('change', function () {
+            saveChecklistBtn.addEventListener('click', () => {
                 const selectedActivity = activitySelect.value;
-                loadChecklist(selectedActivity);
+                if (selectedActivity) {
+                    showPopup('Checklist saved successfully!');
+                } else {
+                    showPopup('Please select an activity to save the checklist.');
+                }
             });
     
+            activitySelect.addEventListener('change', () => {
+                loadChecklist(activitySelect.value);
+            });
+    
+            // Review functionality
             const reviewForm = document.getElementById('reviewForm');
             const reviewsList = document.getElementById('reviewsList');
-            let editingIndex = null;
-    
-            const loadReviews = () => {
-                const reviews = JSON.parse(localStorage.getItem('activityReviews')) || [];
-                reviewsList.innerHTML = '';
-                reviews.forEach((item, index) => {
-                    const reviewItem = document.createElement('div');
-                    reviewItem.innerHTML = `
-                        <strong>${item.activity}</strong> (Rating: ${item.rating})<br>
-                        ${item.review}
-                        <button class="editButton" data-index="${index}">Edit</button>
-                        <button class="deleteButton" data-index="${index}">Delete</button>
-                        <hr>
-                    `;
-                    reviewsList.appendChild(reviewItem);
-                });
-    
-                document.querySelectorAll('.editButton').forEach(button => {
-                    button.addEventListener('click', editReview);
-                });
-    
-                document.querySelectorAll('.deleteButton').forEach(button => {
-                    button.addEventListener('click', deleteReview);
-                });
-            };
-    
-            const editReview = (event) => {
-                editingIndex = event.target.getAttribute('data-index');
-                const reviews = JSON.parse(localStorage.getItem('activityReviews'));
-                const reviewToEdit = reviews[editingIndex];
-    
-                document.getElementById('activityName').value = reviewToEdit.activity;
-                document.getElementById('rating').value = reviewToEdit.rating;
-                document.getElementById('review').value = reviewToEdit.review;
-                reviewForm.querySelector('button[type="submit"]').innerText = 'Update Review';
-            };
-    
-            const deleteReview = (event) => {
-                const indexToDelete = event.target.getAttribute('data-index');
-                const reviews = JSON.parse(localStorage.getItem('activityReviews'));
-                reviews.splice(indexToDelete, 1);
-                localStorage.setItem('activityReviews', JSON.stringify(reviews));
-                loadReviews();
-                showPopup('Review deleted!'); // Pop-up message for deletion
-            };
     
             reviewForm.addEventListener('submit', function(event) {
-                event.preventDefault();
+                event.preventDefault(); // Prevent form submission
+
+                // Retrieve the values from the form
                 const activityName = document.getElementById('activityName').value;
                 const rating = document.getElementById('rating').value;
                 const review = document.getElementById('review').value;
-    
-                const reviews = JSON.parse(localStorage.getItem('activityReviews')) || [];
-                
-                if (editingIndex !== null) {
-                    reviews[editingIndex] = { activity: activityName, rating: rating, review: review };
-                    showPopup('Review updated!'); // Pop-up message for update
-                    editingIndex = null;
-                    reviewForm.querySelector('button[type="submit"]').innerText = 'Submit Review';
+
+                // Show a confirmation dialog before submitting the review
+                const confirmation = confirm(`Are you sure you want to submit your review for "${activityName}" with a rating of ${rating}?`);
+                if (confirmation) {
+                    const savedReviews = JSON.parse(localStorage.getItem('reviews')) || [];
+                    savedReviews.push({ activityName, rating, review });
+                    localStorage.setItem('reviews', JSON.stringify(savedReviews));
+                    displayReviews();
+                    reviewForm.reset(); // Reset the form fields
+                    showPopup('Review submitted successfully!');
                 } else {
-                    reviews.push({ activity: activityName, rating: rating, review: review });
-                    showPopup('Review added!'); // Pop-up message for adding
+                    showPopup('Review submission canceled.');
                 }
-    
-                localStorage.setItem('activityReviews', JSON.stringify(reviews));
-                loadReviews();
-                reviewForm.reset();
             });
-    
-            loadReviews(); // Initial load of reviews
+
+            // Function to display all saved reviews
+            function displayReviews() {
+                const reviewsList = document.getElementById('reviewsList');
+                reviewsList.innerHTML = ''; // Clear existing reviews
+                const savedReviews = JSON.parse(localStorage.getItem('reviews')) || []; // Retrieve saved reviews
+
+                savedReviews.forEach((reviewData, index) => {
+                    const reviewDiv = document.createElement('div');
+                    reviewDiv.innerHTML = `
+                        <h4>${reviewData.activityName}</h4>
+                        <p>Rating: ${reviewData.rating} / 5</p>
+                        <p>${reviewData.review}</p>
+                        <button class="delete-review-btn" data-index="${index}">Delete</button>
+                    `;
+
+                    // Append the review to the reviews list
+                    reviewsList.appendChild(reviewDiv);
+                });
+
+                // Add event listeners for delete buttons
+                const deleteButtons = document.querySelectorAll('.delete-review-btn');
+                deleteButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const index = this.getAttribute('data-index');
+                        deleteReview(index);
+                    });
+                });
+            }
+
+            // Function to delete a specific review
+            function deleteReview(index) {
+                const confirmation = confirm("Are you sure you want to delete this review?");
+                if (confirmation) {
+                    const savedReviews = JSON.parse(localStorage.getItem('reviews')) || [];
+                    // Remove the review from the array
+                    savedReviews.splice(index, 1);
+                    localStorage.setItem('reviews', JSON.stringify(savedReviews));
+                    // Refresh the displayed reviews
+                    displayReviews();
+                    showPopup('Review deleted successfully!');
+                } else {
+                    showPopup('Review deletion canceled.');
+                }
+}
+
+            // Call displayReviews on page load to show existing reviews
+            displayReviews();
         });
     </script>
-      
 </body>
 </html>
